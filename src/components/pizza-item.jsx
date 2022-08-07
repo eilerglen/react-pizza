@@ -1,6 +1,6 @@
 import React, {useState} from 'react'
 
-export const PizzaItem = ({title, price, image, sizes, types}) => {
+export const PizzaItem = ({title, price, imageUrl, sizes, types}) => {
   const typesThink = ['тонкое', 'традиционное']
   const [activeType, setActiveType] = useState(0)
   const [activeSize, setActiveSize] = useState(0)
@@ -9,7 +9,7 @@ export const PizzaItem = ({title, price, image, sizes, types}) => {
     <div className="pizza-block">
     <img
       className="pizza-block__image"
-      src={image}
+      src={imageUrl}
       alt="Pizza"
     />
     <h4 className="pizza-block__title">{title}</h4>
@@ -17,7 +17,7 @@ export const PizzaItem = ({title, price, image, sizes, types}) => {
       <ul>
         {
           types.map((type) =>( 
-          <li 
+          <li key={type}
             onClick={() => setActiveType(type)}
             className={activeType === type ? 'active' : ''}>
               {typesThink[type]}
@@ -29,7 +29,9 @@ export const PizzaItem = ({title, price, image, sizes, types}) => {
       <ul>
        {
         sizes.map((size, index) =>(
-        <li className={activeSize === index? "active" : ""}
+        <li 
+            key={index}
+            className={activeSize === index? "active" : ""}
             onClick={() => setActiveSize(index)}
         >{size} см.
         
