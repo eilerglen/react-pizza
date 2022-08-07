@@ -6,7 +6,8 @@ export const PizzaItem = ({title, price, imageUrl, sizes, types}) => {
   const [activeSize, setActiveSize] = useState(0)
 
   return (
-    <div className="pizza-block">
+    <div className="pizza-block-wrapper">
+      <div className="pizza-block">
     <img
       className="pizza-block__image"
       src={imageUrl}
@@ -58,6 +59,8 @@ export const PizzaItem = ({title, price, imageUrl, sizes, types}) => {
         <i>00</i>
       </button>
     </div>
-  </div>
+    </div>
+    </div>
+    
   )
 }
