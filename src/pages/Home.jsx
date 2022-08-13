@@ -7,11 +7,23 @@ import logo from "../logo.svg";
 
 
 export const Home = () => {
-  const [items, setItems] = React.useState([])
-  const [isLoading, setIsLoading] = React.useState(true)
+  const [items, setItems] = React.useState([]);
+  const [isLoading, setIsLoading] = React.useState(true);
+  const [categoryId, setCategoryId] = React.useState(0);
+  const [sortType, setSortType]  = React.useState({
+    name: 'популярности',
+    sort: 'rating',
+  });
+
 
   React.useEffect(() => {
-    fetch('https://62efe09657311485d12a2ac3.mockapi.io/items')
+    setIsLoading(true)
+
+    const category = categoryId > 0 ? `category=${categoryId}` : ''
+    const sortBy = sortType.sort;
+    fetch(
+      `https://62efe09657311485d12a2ac3.mockapi.io/items?${category}&sortBy=${sortBy}`,
+    )
     .then((data) => {return data.json();
       })
     .then(json => {
@@ -19,14 +31,23 @@ export const Home = () => {
       setIsLoading(false)
   
     })
+    window.scrollTo(0,0)
     
-   },[])
+   },[categoryId, sortType])
+
+   console.log(categoryId, sortType)
 
   return (
     <>
+       <div className="container">
        <div className="content__top">
-            <Categories />
-            <Sort />
+            <Categories 
+              value={categoryId} 
+              onChangeCategory={(i)=> setCategoryId(i)}/>
+            <Sort 
+               value={sortType} 
+               onChangeSort={(i)=> setSortType(i)}/>
+
           </div>
           <h2 className="content__title">Все пиццы</h2>
           <div className="content__items">
@@ -40,6 +61,8 @@ export const Home = () => {
            }
 
           </div>
+       </div>
+      
     </>
   )
 }
