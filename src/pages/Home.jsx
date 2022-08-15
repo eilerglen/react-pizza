@@ -1,12 +1,15 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Sort } from "../components/sort";
 import { Skeleton } from "../components/skeleton";
 import { PizzaItem } from "../components/pizza-item";
 import { Categories } from "../components/categories";
 import logo from "../logo.svg";
 import Pagination from "../components/pagination/pagination";
+import { AppContext } from "../App";
 
-export const Home = ({ searchValue }) => {
+export const Home = () => {
+
+  const {searchValue} = useContext(AppContext)
   const [items, setItems] = React.useState([]);
   const [isLoading, setIsLoading] = React.useState(true);
   const [categoryId, setCategoryId] = React.useState(0);
@@ -28,12 +31,7 @@ export const Home = ({ searchValue }) => {
     const category = categoryId > 0 ? `category=${categoryId}` : "";
     const sortBy = sortType.sort;
     const search = searchValue ? `&search=${searchValue}` : "";
-    fetch(
-      `https://62efe09657311485d12a2ac3.mockapi.io/items?page=${currentPage}&limit=4&${category}
-      &sortBy=
-      ${sortBy}
-      ${search}`
-    )
+    fetch(`https://62efe09657311485d12a2ac3.mockapi.io/items?page=${currentPage}&limit=4&${category}&sortBy=${sortBy}${search}`)
       .then((data) => { 
         return data.json();
       })
