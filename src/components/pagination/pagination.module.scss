@@ -1,0 +1,33 @@
+.root {
+  li {
+      display: inline-flex;
+
+      a {
+        display: inline-block;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+        width: 40px;
+        height: 40px;
+        padding: 10px;
+        border: 1px solid #333;
+        border-radius: 30px;
+        margin-right: 20px;
+        cursor: pointer;
+
+        &:hover {
+          
+        } 
+      }
+  }
+  :global {
+    .selected {
+      a {
+        background-color: #fe5f1e;
+        color: aliceblue;
+      }
+    }
+    
+  }
+ 
+}
