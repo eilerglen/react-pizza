@@ -6,7 +6,7 @@ import { Categories } from "../components/categories"
 import logo from "../logo.svg";
 
 
-export const Home = () => {
+export const Home = ({searchValue}) => {
   const [items, setItems] = React.useState([]);
   const [isLoading, setIsLoading] = React.useState(true);
   const [categoryId, setCategoryId] = React.useState(0);
@@ -15,6 +15,15 @@ export const Home = () => {
     sort: 'rating',
   });
 
+const pizzas =  items
+.filter(item => {
+  if (item.title.toLowerCase().includes(searchValue.toLowerCase())) {
+    return true
+  }
+  return false
+}).map((item) => (<PizzaItem key = {item.id}{...item}/>))
+
+const skeletons = [...new Array(6)].map((_, index) => <Skeleton key={index}/>)
 
   React.useEffect(() => {
     setIsLoading(true)
@@ -51,12 +60,7 @@ export const Home = () => {
           </div>
           <h2 className="content__title">Все пиццы</h2>
           <div className="content__items">
-           { isLoading ? [...new Array(6)].map((_, index) => <Skeleton key={index}/>) :
-              items.map((item) => (
-               <PizzaItem key = {item.id}
-                {...item}
-                />
-              ))
+           { isLoading ? skeletons : pizzas
                
            }
 
