@@ -15,13 +15,7 @@ export const Home = ({searchValue}) => {
     sort: 'rating',
   });
 
-const pizzas =  items
-.filter(item => {
-  if (item.title.toLowerCase().includes(searchValue.toLowerCase())) {
-    return true
-  }
-  return false
-}).map((item) => (<PizzaItem key = {item.id}{...item}/>))
+const pizzas =  items.map((item) => (<PizzaItem key = {item.id}{...item}/>))
 
 const skeletons = [...new Array(6)].map((_, index) => <Skeleton key={index}/>)
 
@@ -30,8 +24,9 @@ const skeletons = [...new Array(6)].map((_, index) => <Skeleton key={index}/>)
 
     const category = categoryId > 0 ? `category=${categoryId}` : ''
     const sortBy = sortType.sort;
+    const search = searchValue ? `&search=${searchValue}` : '';
     fetch(
-      `https://62efe09657311485d12a2ac3.mockapi.io/items?${category}&sortBy=${sortBy}`,
+      `https://62efe09657311485d12a2ac3.mockapi.io/items?${category}&sortBy=${sortBy}${search}`,
     )
     .then((data) => {return data.json();
       })
@@ -42,12 +37,11 @@ const skeletons = [...new Array(6)].map((_, index) => <Skeleton key={index}/>)
     })
     window.scrollTo(0,0)
     
-   },[categoryId, sortType])
+   },[categoryId, sortType, searchValue])
 
-   console.log(categoryId, sortType)
 
   return (
-    <>
+    <> 
        <div className="container">
        <div className="content__top">
             <Categories 
