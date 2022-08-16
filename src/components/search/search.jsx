@@ -11,25 +11,14 @@ const Search = () => {
   const [value, setValue] = React.useState('')
   const {searchValue, setSearchValue} = React.useContext(AppContext)
   const inputRef = useRef(null)
-
+  
+  //Очистить инпуты
   const onclickClear = () => {
     setValue('')
     setSearchValue('')
     inputRef.current.focus()
   }
-  React.useCallback(() => {
-
-  })
-  
- 
-
-  React.useEffect(() => {
-    console.log(document.querySelector('input'))
-
-  },[])
-
- 
-
+  //Поисковый запрос с задержкой
   const updateSearchValue = useCallback (
       debounce((str) => {
         console.log(str)
@@ -38,6 +27,8 @@ const Search = () => {
 
     [],
   )
+
+  //Смена значения инпута и вызов функции поискового запроса
 
   const onChangeInput = (evt) => {
     setValue(evt.target.value)

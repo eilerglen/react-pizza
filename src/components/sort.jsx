@@ -2,21 +2,22 @@ import React, { useState } from 'react'
 import { useSelector, useDispatch } from "react-redux";
 import { setSort } from '../services/slices/filterSlice';
 
+export const sortList= [
+  {name: 'популярности (DESC)', sortProperty: 'rating'},
+  {name: 'популярности (ASC)', sortProperty: '-rating'},
+  {name: 'цене (DESC)', sortProperty: 'price'},
+  {name: 'цене (ASC)', sortProperty: '-price'},
+  {name: 'алфавиту (DESC)', sortProperty: 'title'},
+  {name: 'алфавиту (ASC)', sortProperty: '-title'},
+]
+
 export const Sort = () => {
   const [isVisible, setIsVisible] = useState(false)
 
   const sort = useSelector(store => store.filterSlice.sort)
   const dispatch = useDispatch()
 
-  const list = [
-    {name: 'популярности (DESC)', sortProperty: 'rating'},
-    {name: 'популярности (ASC)', sortProperty: '-rating'},
-    {name: 'цене (DESC)', sortProperty: 'price'},
-    {name: 'цене (ASC)', sortProperty: '-price'},
-    {name: 'алфавиту (DESC)', sortProperty: 'title'},
-    {name: 'алфавиту (ASC)', sortProperty: '-title'},
-  ]
- 
+
 
   const onClickListItem = (obj) => {
      dispatch(setSort(obj) )
@@ -45,7 +46,7 @@ export const Sort = () => {
       {isVisible && (
           <div className="sort__popup">
           <ul>
-            {list.map((obj, index) => (
+            {sortList.map((obj, index) => (
               <li 
                 key = {index}
                 className={sort.sortProperty === obj.sortProperty? 'active' : ''}
