@@ -6,7 +6,6 @@ export const Sort = () => {
   const [isVisible, setIsVisible] = useState(false)
 
   const sort = useSelector(store => store.filterSlice.sort)
-  console.log(sort)
   const dispatch = useDispatch()
 
   const list = [
