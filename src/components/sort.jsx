@@ -16,16 +16,28 @@ export const Sort = () => {
 
   const sort = useSelector(store => store.filterSlice.sort)
   const dispatch = useDispatch()
-
+  const sortRef = React.useRef()
 
 
   const onClickListItem = (obj) => {
      dispatch(setSort(obj) )
      setIsVisible(false)
-  }
+  };
+
+  React.useEffect(() => {
+    const handleClickOutside = (event) => {
+      if(!event.path.includes(sortRef.current)) {
+        setIsVisible(false)
+      }
+    }
+    document.body.addEventListener('click', handleClickOutside)
+    return () => {
+      document.body.removeEventListener('click', handleClickOutside)
+    }
+  },[])
   
   return (
-    <div className="sort">
+    <div ref={sortRef} className="sort">
       <div 
         className="sort__label">
         <svg
