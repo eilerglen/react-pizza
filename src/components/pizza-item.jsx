@@ -74,7 +74,7 @@ export const PizzaItem = ({id, title, price, imageUrl, sizes, types}) => {
           />
         </svg>
         <span>Добавить</span>
-        {addedCount > 0&& (
+        {addedCount > 0 && (
           <i>{addedCount}</i>
         )}
         

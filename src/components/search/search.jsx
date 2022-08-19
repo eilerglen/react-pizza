@@ -1,28 +1,31 @@
 import React from 'react';
 import styles from './search.module.scss';
 import search from '../../assets/img/icons/search.svg'
-import { AppContext } from '../../App';
 import { useRef } from 'react';
 import debounce from 'lodash.debounce';
 import { useCallback } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { setSearchValue } from '../../services/slices/filterSlice';
 
 
 const Search = () => {
   const [value, setValue] = React.useState('')
-  const {searchValue, setSearchValue} = React.useContext(AppContext)
+  const { searchValue } = useSelector(state => state.filterSlice)
+  console.log(searchValue)
+  const dispatch = useDispatch();
+
   const inputRef = useRef(null)
   
   //Очистить инпуты
   const onclickClear = () => {
     setValue('')
-    setSearchValue('')
+    dispatch(setSearchValue(''))
     inputRef.current.focus()
   }
   //Поисковый запрос с задержкой
   const updateSearchValue = useCallback (
       debounce((str) => {
-        console.log(str)
-        setSearchValue(str)
+        dispatch(setSearchValue(str))
       }, 2000),
 
     [],

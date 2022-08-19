@@ -1,14 +1,13 @@
-import React, { useContext } from "react";
+import React from "react";
 import axios from "axios";
 import qs from "qs";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate, useSearchParams } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { Sort, sortList } from "../components/sort";
 import { Skeleton } from "../components/skeleton";
 import { PizzaItem } from "../components/pizza-item";
 import { Categories } from "../components/categories";
 import Pagination from "../components/pagination/pagination";
-import { AppContext } from "../App";
 import {
   setCategoryId,
   setCurrentPage,
@@ -20,11 +19,11 @@ export const Home = () => {
   const isSearch = React.useRef(false);
   const isMounted = React.useRef(false);
   const navigate = useNavigate();
-  const { categoryId, sort, currentPage } = useSelector(
+  const searchParams = useSearchParams()
+  console.log(searchParams)
+  const { categoryId, sort, currentPage, searchValue } = useSelector(
     (state) => state.filterSlice
   );
-  const { searchValue } = useContext(AppContext);
-
   const { items, status } = useSelector((state) => state.pizzasSlice);
   const dispatch = useDispatch();
 
@@ -103,7 +102,11 @@ export const Home = () => {
     getPizzas();
   }, [categoryId, sort.sortProperty, searchValue, currentPage]);
 
-  const pizzas = items.map((item) => <PizzaItem key={item.id} {...item} />);
+  const pizzas = items.map((item) => (
+    <Link key={item.id} to={`/pizza/${item.id}`}>
+      <PizzaItem  {...item} />;
+    </Link>
+  ));
 
   const skeletons = [...new Array(6)].map((_, index) => (
     <Skeleton key={index} />
