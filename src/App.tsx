@@ -1,6 +1,6 @@
 import React from "react";
 import "./scss/app.scss";
-import { Home } from "../src/pages/Home";
+import { Home } from "./pages/Home";
 import Cart from "./pages/Cart";
 import NotFound404 from "./pages/NotFound";
 import PizzaPage from "./pages/PizzaPage";

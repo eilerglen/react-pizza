@@ -3,15 +3,14 @@ import { Link, useLocation } from "react-router-dom";
 import Search from "./search/search";
 import { useSelector } from "react-redux";
 import { selectCart } from "../services/slices/cartSlice";
+import React from "react";
 
 export const Header = () => {
-  const { items, totalPrice } = useSelector((state) => state.cartSlice);
+  const { items, totalPrice } = useSelector((state: any) => state.cartSlice);
   const location = useLocation();
   const pathname = location.pathname;
-  console.log(pathname);
-  const totalCount = items.reduce((sum, item) => sum + item.count, 0);
+  const totalCount = items.reduce((sum: number, item: any) => sum + item.count, 0);
 
-  console.log(items, totalPrice);
   return (
     <div className="header">
       <div className="container">

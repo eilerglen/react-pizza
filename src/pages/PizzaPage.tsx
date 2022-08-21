@@ -1,19 +1,27 @@
-import React from "react";
+import React, { FC } from "react";
 import { Link, useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
 
-const PizzaPage = () => {
+type TPizza = {
+  imageUrl?: string,
+  title?: string,
+  price?: number,
+  rating?: number,
+}
+
+const PizzaPage: FC = () => {
   const { id } = useParams();
-  const [pizza, setPizza] = React.useState({});
+  const [pizza, setPizza] = React.useState<TPizza>({});
+  console.log(id)
   const navigate = useNavigate();
 
   React.useEffect(() => {
     async function fetchPizza() {
       try {
         const { data } = await axios.get(
-          `https://62defe09657311485d12a2ac3.mockapi.io/items? ` + id
+          `https://62efe09657311485d12a2ac3.mockapi.io/items/${id} `
         );
-        setPizza(...data);
+        setPizza({...data});
       } catch (err) {
         alert("Пиццы не прогрузились!");
         navigate('/')
@@ -22,6 +30,7 @@ const PizzaPage = () => {
 
     fetchPizza();
   }, []);
+  console.log(pizza)
 
   if (!pizza) {
     return (
@@ -36,7 +45,7 @@ const PizzaPage = () => {
       <h2>{pizza.title}</h2>
       <h4>{pizza.price}</h4>
       <p>{pizza.rating}</p>
-      <Link to="/" class="button button--outline button--add go-back-btn">
+      <Link to="/" className="button button--outline button--add go-back-btn">
         <svg
           width="8"
           height="14"

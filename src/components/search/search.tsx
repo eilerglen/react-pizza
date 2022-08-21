@@ -4,23 +4,23 @@ import search from '../../assets/img/icons/search.svg'
 import { useRef } from 'react';
 import debounce from 'lodash.debounce';
 import { useCallback } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { setSearchValue } from '../../services/slices/filterSlice';
+import { useAppDispatch } from "../../services/store";
 
 
 const Search = () => {
   const [value, setValue] = React.useState('')
-  const { searchValue } = useSelector(state => state.filterSlice)
-  console.log(searchValue)
-  const dispatch = useDispatch();
+  const { searchValue } = useSelector((state: any) => state.filterSlice)
+  const dispatch = useAppDispatch();
 
-  const inputRef = useRef(null)
+  const inputRef = useRef<HTMLInputElement | null>(null)
   
   //Очистить инпуты
   const onclickClear = () => {
     setValue('')
     dispatch(setSearchValue(''))
-    inputRef.current.focus()
+    inputRef.current?.focus()
   }
   //Поисковый запрос с задержкой
   const updateSearchValue = useCallback (
@@ -33,9 +33,9 @@ const Search = () => {
 
   //Смена значения инпута и вызов функции поискового запроса
 
-  const onChangeInput = (evt) => {
-    setValue(evt.target.value)
-    updateSearchValue(evt.target.value)
+  const onChangeInput = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setValue(event.target.value)
+    updateSearchValue(event.target.value)
   }
 
   return (

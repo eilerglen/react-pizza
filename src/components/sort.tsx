@@ -1,34 +1,41 @@
 import React, { useState } from 'react'
 import { useSelector, useDispatch } from "react-redux";
 import { setSort } from '../services/slices/filterSlice';
+import { SortPropertyEnum } from '../types/enumSort'
 
-export const sortList= [
-  {name: 'популярности (DESC)', sortProperty: 'rating'},
-  {name: 'популярности (ASC)', sortProperty: '-rating'},
-  {name: 'цене (DESC)', sortProperty: 'price'},
-  {name: 'цене (ASC)', sortProperty: '-price'},
-  {name: 'алфавиту (DESC)', sortProperty: 'title'},
-  {name: 'алфавиту (ASC)', sortProperty: '-title'},
+type TSortItem = {
+  name: string,
+  sortProperty: SortPropertyEnum,
+}
+
+export const sortList = [
+  { name: 'популярности (DESC)', sortProperty: SortPropertyEnum.RATING_DESC },
+  { name: 'популярности (ASC)', sortProperty: SortPropertyEnum.RATING_ASC },
+  { name: 'цене (DESC)', sortProperty: SortPropertyEnum.PRICE_DESC },
+  { name: 'цене (ASC)', sortProperty: SortPropertyEnum.PRICE_ASC },
+  { name: 'алфавиту (DESC)', sortProperty: SortPropertyEnum.TITLE_DESC },
+  { name: 'алфавиту (ASC)', sortProperty: SortPropertyEnum.TITLE_ASC },
 ]
 
 export const Sort = () => {
   const [isVisible, setIsVisible] = useState(false)
 
-  const sort = useSelector(store => store.filterSlice.sort)
+  const sort = useSelector((store: any) => store.filterSlice.sort)
+  const sortRef = React.useRef<HTMLDivElement>(null)
+
   const dispatch = useDispatch()
-  const sortRef = React.useRef()
 
-
-  const onClickListItem = (obj) => {
+  const onClickListItem = (obj: TSortItem) => {
      dispatch(setSort(obj) )
      setIsVisible(false)
   };
 
   React.useEffect(() => {
-    const handleClickOutside = (event) => {
-      if(!event.path.includes(sortRef.current)) {
+    const handleClickOutside = (event: MouseEvent) => {
+      if(sortRef.current && !event.composedPath().includes(sortRef.current)) {
         setIsVisible(false)
       }
+    
     }
     document.body.addEventListener('click', handleClickOutside)
     return () => {

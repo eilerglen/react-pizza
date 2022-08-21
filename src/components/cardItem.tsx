@@ -1,20 +1,28 @@
+import React, {FC} from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { addItem, removeItem,  decreaseCount } from "../services/slices/cartSlice";
+import { IPizzaItem } from '../types/pizza-item'
 
-export const CartItem = ({id, title, type, size, price, count, imageUrl}) => {
+
+export const CartItem: FC<IPizzaItem> = ({id, title, type, size, price, count, imageUrl}) => {
  
   const dispatch = useDispatch();
 
   const onClickPlus = () => {
-    dispatch(addItem({
-      id,
-    }))
+    const item = {
+      id, 
+      title, 
+      type, 
+      size, 
+      price, 
+      count, 
+      imageUrl
+    }
+    dispatch(addItem(item))
   }
 
   const onClickMinus = () => {
-    dispatch(decreaseCount({
-      id,
-    }))
+    dispatch(decreaseCount(id))
   }
 
   const onClickRemove = () => {
